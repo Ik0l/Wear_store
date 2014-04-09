@@ -1,12 +1,20 @@
 from django.db import models
 from django.contrib.auth.models import User
-# Create your models here. blank=True, null=True
+
 
 class Category(models.Model):
     title = models.CharField(max_length=30)
 
     def __unicode__(self):
         return u'%s' % (self.title, )
+
+
+class Size(models.Model):
+    title = models.CharField(max_length=10)
+    category = models.ForeignKey(Category)
+
+    def __unicode__(self):
+        return u'%s(%s)' % (self.title, self.category.title)
 
 
 class Cloth(models.Model):
@@ -23,17 +31,10 @@ class Cloth(models.Model):
     rating_3 = models.IntegerField(default=0)
     rating_4 = models.IntegerField(default=0)
     rating_5 = models.IntegerField(default=0)
+    sizez = models.ManyToManyField(Size, through='SizeCount')
 
     def __unicode__(self):
         return u'%s' % (self.title)
-
-
-class Size(models.Model):
-    title = models.CharField(max_length=10)
-    category = models.ForeignKey(Category)
-
-    def __unicode__(self):
-        return u'%s(%s)' % (self.title, self.category.title)
 
 
 class SizeCount(models.Model):
@@ -54,6 +55,7 @@ class Comments(models.Model):
 
 class Cart(models.Model):
     user = models.ForeignKey(User)
+    items = models.ManyToManyField(Cloth, through='Proxy')
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     region = models.CharField(max_length=50, blank=True)
@@ -74,3 +76,10 @@ class Contacts(models.Model):
     home = models.CharField(max_length=10)
     apart = models.CharField(max_length=5, blank=True)
     phone = models.CharField(max_length=30)
+
+
+class Proxy(models.Model):
+    item = models.ForeignKey(Cloth)
+    cart = models.ForeignKey(Cart)
+    count = models.IntegerField()
+    size = models.ForeignKey(Size)
