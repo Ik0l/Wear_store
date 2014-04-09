@@ -13,7 +13,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 path = lambda *args: os.path.join(BASE_DIR, *args).replace('\\', '/')
 
-
+SITE_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
@@ -96,5 +96,7 @@ STATICFILES_DIRS = (
     ('static', path('static')),
 )
 
-MEDIA_ROOT = '/home/ikol/djangoenv/bin/Wear_store/media/'
+MEDIA_ROOT = os.path.join(SITE_ROOT, 'media')
 MEDIA_URL = '/media/'
+LOCAL_MEDIA_ROOT = MEDIA_ROOT
+LOCAL_MEDIA_URL = MEDIA_URL
