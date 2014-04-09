@@ -53,12 +53,11 @@ def cart_add(request, cloth_id=0):
 
 def cart_view(request):
     if ("cloth" in request.session):
-        xx = len(request.session["cloth"])
         return render_to_response('cart.html', {
             'wears': Cloth.objects.filter(id__in=request.session["cloth"]),
             'sizes': SizeCount.objects.filter(cloth_id__in=request.session["cloth"]),
             'items': request.session["cloth"],
-            'length': xx,
+            'length': len(request.session["cloth"]),
             }
         )
     else:
