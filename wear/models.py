@@ -58,24 +58,16 @@ class Cart(models.Model):
     items = models.ManyToManyField(Cloth, through='Proxy')
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    region = models.CharField(max_length=50, blank=True)
-    city = models.CharField(max_length=20)
-    street = models.CharField(max_length=50)
-    home = models.CharField(max_length=10)
-    apart = models.CharField(max_length=5, blank=True)
-    phone = models.CharField(max_length=30)
-    comments = models.CharField(max_length=300)
+    addres = models.TextField()
+    phone = models.CharField(max_length=40)
+    comments = models.TextField()
     total = models.IntegerField(default=0)
 
 
 class Contacts(models.Model):
     user = models.ForeignKey(User)
-    region = models.CharField(max_length=50, blank=True)
-    city = models.CharField(max_length=20)
-    street = models.CharField(max_length=50)
-    home = models.CharField(max_length=10)
-    apart = models.CharField(max_length=5, blank=True)
-    phone = models.CharField(max_length=30)
+    addres = models.TextField()
+    phone = models.CharField(max_length=40)
 
 
 class Proxy(models.Model):
