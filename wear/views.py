@@ -62,4 +62,4 @@ def cart_view(request):
             }
         )
     else:
-        return render_to_response('cart.html', {'check': False})
+        return render_to_response('cart.html')
