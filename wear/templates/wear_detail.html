@@ -2,7 +2,13 @@
 
 {% block wear_block %}
 <div class="large-10 columns">
-    <div class="panel callout radius">
+    <center><span class="radius label" style="font-size: 42px; width: 100%">{{ wear.title }}</span></center>
+    <div style="border: 2px double black; float: left; width: 100%; padding: 5px 5px 5px 5px; margin-top: 20px">
+        <div style="float: inherit; max-width: 300px; border: 1px double black; margin-right: 10px; padding: 5px 5px 5px 5px;">
+            <img src="/media/{{ wear.logo }}">
+            <center><a href="/media/{{ wear.logo }}">Увеличить</a></center>
+        </div>
+        <div>
         <h2><b>Название: </b>{{ wear.title }}</h2>
         <h5><b>Описание: </b>{{ wear.description }}</h5>
         <h5><b>Цена: </b>{{ wear.price }} руб.</h5>
@@ -11,7 +17,8 @@
         {% for size in sizes %}
             <p>{{ size.size }} - {{ size.count }}</p>
         {% endfor %}
-        <p><b>Дополнительные комментарии: </b>{{ wear.comments }} </p>
+        <p><b>Дополнительные комментарии: </b>{{ wear.comment }} </p>
+        </div>
     </div>
 </div>
 {% endblock %}

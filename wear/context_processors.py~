@@ -1,0 +1,19 @@
+<<<<<<< HEAD:context_processors/Menu.py
+=======
+# -*- coding:utf-8 -*-
+
+>>>>>>> a7a593a1af7e71efb711af235c9e14fcfa8659ff:wear/context_processors.py
+from wear.models import Category
+
+
+def menu(request):
+    categoryes = Category.objects.all()
+<<<<<<< HEAD:context_processors/Menu.py
+    return {"category_list": categoryes}
+=======
+    cat = Category.objects.filter(id=1)
+    return {
+        "category_list": categoryes,
+        "catcatcat": cat,
+    }
+>>>>>>> a7a593a1af7e71efb711af235c9e14fcfa8659ff:wear/context_processors.py

@@ -9,17 +9,17 @@
 <center><a href="/"><h1>Wear_Store_logo</h1></a></center>
 <div class="row" >
     <ul class="breadcrumbs">
-        {% if cur_url == '/wear/'%}
+        {% if request.path == '/wear/'%}
             <li class = "current">Одежда</li></ul>
         {% else %}
             <a href="/wear">Одежда</a></li>
         {% endif %}
-        {% if '/detail/' not in cur_url and '/category/' in cur_url %}
+        {% if '/detail/' not in request.path and '/category/' in request.path %}
             <li class = "current">{{ cat.title }}</li></ul>
         {% else %}
             <a href="/wear/category/{{ cat.id }}">{{ cat.title }}</a></li>
         {% endif %}
-        {% if '/detail/' in cur_url and '/category/' not in cur_url %}
+        {% if '/detail/' in request.path and '/category/' not in request.path %}
             <li class = "current">{{ wear.title }}</li></ul>
         {% else %}
             </li></ul>
@@ -27,11 +27,8 @@
     <div class="large-2 columns">
         <ul class = "off-canvas-list" style="background: #333333; ">
             <li><label>Категории товаров:</label></li>
-            <li><a href="/wear/category/1">Ремни</a></li>
-            <li><a href="/wear/category/2">Майки</a></li>
-            <li><a href="/wear/category/3">Брюки</a></li>
             {% for category in category_list %}
-            <li><a href="#">{{ category.title }}</a></li>
+            <li><a href="/wear/category/{{ category.id }}">{{ category.title }}</a></li>
             {% endfor %}
         </ul>
     </div>
