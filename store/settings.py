@@ -13,7 +13,6 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 path = lambda *args: os.path.join(BASE_DIR, *args).replace('\\', '/')
 
-SITE_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
@@ -34,7 +33,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.messages.context_processors.messages",
     "django.core.context_processors.request",
 
-    "context_processors.Menu.menu",
+    "wear.context_processors.menu",
 )
 
 TEMPLATE_DIRS = {
@@ -109,7 +108,7 @@ STATICFILES_DIRS = (
     path('static'),
 )
 
-MEDIA_ROOT = path('www/media')
+MEDIA_ROOT = path('www', 'media')
 MEDIA_URL = '/media/'
 LOCAL_MEDIA_ROOT = MEDIA_ROOT
 LOCAL_MEDIA_URL = MEDIA_URL
