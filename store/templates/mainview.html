@@ -9,6 +9,15 @@
 <center><a href="/"><h1>Wear_Store_logo</h1></a></center>
 <div class="row" >
     <ul class="breadcrumbs">
+        {% for crumb in breadcrumbs %}
+            {% if request.path == crumb.get_absolute_url %}
+                <li class="current">{{ crumb.title }}</li>
+            {% else %}
+                <li><a href="{{ crumb.get_absolute_url }}">{{ crumb.title }}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <ul class="breadcrumbs">
         {% if request.path == '/wear/'%}
             <li class = "current">Одежда</li></ul>
         {% else %}
@@ -28,7 +37,7 @@
         <ul class = "off-canvas-list" style="background: #333333; ">
             <li><label>Категории товаров:</label></li>
             {% for category in category_list %}
-            <li><a href="/wear/category/{{ category.id }}">{{ category.title }}</a></li>
+            <li><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
             {% endfor %}
         </ul>
     </div>

@@ -22,7 +22,7 @@
 		{% for wear in wears %}
 		{% if wear.id == item %}
 			<tr>
-				<td><a href="/wear/detail/{{ wear.id }}">{{ wear.title }}</a></td><td>{{ wear.description }}</td><td><input id="item_field_{{ forloop.counter }}" type="text" value="1"/><input type="button" id="Button_{{ forloop.counter }}" data-id="item_field_{{ forloop.counter }}" onclick="item_plus(this.id);return false;" value="+"/></td><td>{{ wear.price }}</td>
+				<td><a href="{{ wear.get_absolute_url }}">{{ wear.title }}</a></td><td>{{ wear.description }}</td><td><input id="item_field_{{ forloop.counter }}" type="text" value="1"/><input type="button" id="Button_{{ forloop.counter }}" data-id="item_field_{{ forloop.counter }}" onclick="item_plus(this.id);return false;" value="+"/></td><td>{{ wear.price }}</td>
 				<td><select name="select" style="min-width: 100px">
 				<option selected="selected">Размер</option>
 				{% for size in sizes %}

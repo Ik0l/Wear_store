@@ -6,6 +6,10 @@ from django.contrib.auth.models import User
 class Category(models.Model):
     title = models.CharField(u'Название', max_length=30)
 
+    @models.permalink
+    def get_absolute_url(self):
+        return 'wear.views.wear_list_cat', [str(self.id)]
+
     class Meta():
         verbose_name = u'Категория'
         verbose_name_plural = u'Категории'
@@ -41,13 +45,17 @@ class Cloth(models.Model):
     rating_5 = models.IntegerField(u'Оценка 5', default=0)
     sizez = models.ManyToManyField(Size, through='SizeCount')
 
+    @models.permalink
+    def get_absolute_url(self):
+        return 'wear.views.wear_detail', [str(self.id)]
+
     class Meta():
         verbose_name = u'Наименование'
         verbose_name_plural = u'Наименования'
         ordering = ('title', )
 
     def __unicode__(self):
-        return u'%s' % (self.title)
+        return u'%s' % self.title
 
 
 class SizeCount(models.Model):
@@ -56,9 +64,12 @@ class SizeCount(models.Model):
     count = models.IntegerField(u'Количество', default=0)
 
     class Meta():
-        verbose_name = u'Запас размеров'
-        verbose_name_plural = u'Запасы размеров'
+        verbose_name = u'Размер'
+        verbose_name_plural = u'Размеры'
         ordering = ('size', )
+
+    def __unicode__(self):
+        return u'%s' % self.size
 
 
 class Gallery(models.Model):

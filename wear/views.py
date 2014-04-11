@@ -32,12 +32,12 @@ def wear_list_cat(request, cat_id):
     }, context)
 
 
-def cart_add(request, cloth_id=0):
+def cart_add(request, cloth_id):
     if "cloth" in request.session:
         request.session["cloth"] += [Cloth.objects.get(id=cloth_id).id]
         return redirect('/cart/')
     else:
-        request.session.set_expiry(60)
+        request.session.set_expiry(60)  # Для тестов. Не забыть исправить, а лучше использовать что-нибудь другое
         request.session["cloth"] = [Cloth.objects.get(id=cloth_id).id]
         return redirect('/')
 
