@@ -1,4 +1,3 @@
-from django.core.context_processors import request
 from wear.models import Category
 
 
