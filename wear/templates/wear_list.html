@@ -7,7 +7,7 @@
         <div style="float: inherit; margin: 5px 5px 5px 5px">
             <ul class="pricing-table" style="width: 250px">
                 <li class="title">{{ wear.title }}</li>
-                <li class="description" style="height: 200px">{{ wear.description }}</li>
+                <li class="description" style="max-height: 250px; min-height: 250px"><img src="/media/{{ wear.logo }}"></li>
                 <li class="price">{{ wear.price }} руб</li>
                 <li class="cta-button"><a class="button" href="/wear/detail/{{ wear.id }}">Просмотр</a><a class="button" href="/wear/add_to_cart/{{ wear.id}} ">В корзину</a></li>
             </ul>
