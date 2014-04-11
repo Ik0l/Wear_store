@@ -25,6 +25,18 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.contrib.messages.context_processors.messages",
+    "django.core.context_processors.request",
+
+    "context_processors.Menu.menu",
+)
+
 TEMPLATE_DIRS = {
     path('store', 'templates'),
     path('wear', 'templates'),
@@ -90,13 +102,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
+STATIC_ROOT = path('www', 'static', )
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    ('static', path('static')),
+    path('static'),
 )
 
-MEDIA_ROOT = os.path.join(SITE_ROOT, 'media')
+MEDIA_ROOT = path('www/media')
 MEDIA_URL = '/media/'
 LOCAL_MEDIA_ROOT = MEDIA_ROOT
 LOCAL_MEDIA_URL = MEDIA_URL

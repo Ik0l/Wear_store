@@ -12,12 +12,12 @@ def wear_list(request):
 def wear_detail(request, cloth_id):
     try:
         count_x = 0
-        for x in SizeCount.objects.filter(cloth_id=cloth_id):
+        for x in SizeCount.objects.filter(item_id=cloth_id):
             count_x += x.count
         return render_to_response('wear_detail.html', {
             'wear': Cloth.objects.get(id=cloth_id),
-            'cat': Category.objects.get(id = Cloth.objects.get(id=cloth_id).category_id),
-            'sizes': SizeCount.objects.filter(cloth_id=cloth_id),
+            'cat': Category.objects.get(id=Cloth.objects.get(id=cloth_id).category_id),
+            'sizes': SizeCount.objects.filter(item_id=cloth_id),
             'all_count': count_x,
             'cur_url': request.path,
             }

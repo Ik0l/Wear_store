@@ -3,24 +3,26 @@
 <html>
 <head>
     <title>Store</title>
-    <link rel="stylesheet" type="text/css" href="{% static "static/css/foundation.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/foundation.css" %}">
 </head>
 <body>
 <center><a href="/"><h1>Wear_Store_logo</h1></a></center>
 <div class="row" >
     <ul class="breadcrumbs">
         {% if cur_url == '/wear/'%}
-            <li class = current>Одежда</li></ul>
+            <li class = "current">Одежда</li></ul>
         {% else %}
             <a href="/wear">Одежда</a></li>
         {% endif %}
         {% if '/detail/' not in cur_url and '/category/' in cur_url %}
-            <li class = current><a href="#">{{ cat.title }}</a></li></ul>
-        {% else %}<a href="/wear/category/{{ cat.id }}">{{ cat.title }}</a></li>
+            <li class = "current">{{ cat.title }}</li></ul>
+        {% else %}
+            <a href="/wear/category/{{ cat.id }}">{{ cat.title }}</a></li>
         {% endif %}
-            {% if '/detail/' in cur_url and '/category/' not in cur_url %}
-                <li class = current><a href="#">{{ wear.title }}</a></li></ul>
-        {% else %}</li></ul>
+        {% if '/detail/' in cur_url and '/category/' not in cur_url %}
+            <li class = "current">{{ wear.title }}</li></ul>
+        {% else %}
+            </li></ul>
         {% endif %}
     <div class="large-2 columns">
         <ul class = "off-canvas-list" style="background: #333333; ">
@@ -28,6 +30,9 @@
             <li><a href="/wear/category/1">Ремни</a></li>
             <li><a href="/wear/category/2">Майки</a></li>
             <li><a href="/wear/category/3">Брюки</a></li>
+            {% for category in category_list %}
+            <li><a href="#">{{ category.title }}</a></li>
+            {% endfor %}
         </ul>
     </div>
 {% block wear_block %} {% endblock %}
