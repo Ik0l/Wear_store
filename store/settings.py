@@ -105,7 +105,7 @@ STATIC_ROOT = path('www', 'static', )
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    path('static'),
+    path('store', 'static'),
 )
 
 MEDIA_ROOT = path('www', 'media')
