@@ -1,9 +1,10 @@
 # -*- coding:utf-8 -*-
 
-from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
-from django.template.context import RequestContext
 from django.db.models import Sum
+from django.shortcuts import render_to_response, redirect, get_object_or_404
+from django.template.context import RequestContext
+
 from wear.models import Cloth, SizeCount, Category
 
 
@@ -24,7 +25,6 @@ def wear_list_cat(request, cat_id):
         }, context)
     else:
         return render_to_response('wear_list.html', {'wears': Cloth.objects.all()}, context)
-
 
 
 def wear_detail(request, cloth_id):

@@ -1,8 +1,9 @@
 # -*- coding:utf-8 -*-
 
-from django.contrib import admin
-from wear.models import Category, Cloth, Size, SizeCount, Gallery
 from django import forms
+from django.contrib import admin
+
+from wear.models import Category, Cloth, Size, SizeCount, Gallery
 
 
 class SizesInLine(admin.TabularInline):

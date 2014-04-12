@@ -1,15 +1,12 @@
 # -*- coding:utf-8 -*-
 
 from django.conf.urls import patterns, url
-
 from django.contrib import admin
+
+
 admin.autodiscover()
 
 urlpatterns = patterns('wear.views',
-    # Examples:
-    # url(r'^$', 'store.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-
     url(r'^$', 'wear_list_cat', {'cat_id': 0}, name='list_all'),
     url(r'^category/(?P<cat_id>\d+)/$', 'wear_list_cat', name='list_cat'),
     url(r'^detail/(?P<cloth_id>\d+)/$', 'wear_detail'),
