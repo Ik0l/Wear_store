@@ -1,6 +1,7 @@
 {% extends 'mainview.html' %}
 
-{% block wear_block %}
+{% block title %} {{ wear.title }} {% endblock %}
+{% block content %}
 <div class="large-10 columns">
     <center><span class="radius label" style="font-size: 42px; width: 100%">{{ wear.title }}</span></center>
     <div style="border: 2px double black; float: left; width: 100%; padding: 5px 5px 5px 5px; margin-top: 20px">

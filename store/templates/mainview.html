@@ -2,37 +2,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Store</title>
+    <title>Store. {% block title %}{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{% static "css/foundation.css" %}">
 </head>
 <body>
 <center><a href="/"><h1>Wear_Store_logo</h1></a></center>
 <div class="row" >
-    <ul class="breadcrumbs">
-        {% for crumb in breadcrumbs %}
-            {% if request.path == crumb.get_absolute_url %}
-                <li class="current">{{ crumb.title }}</li>
-            {% else %}
-                <li><a href="{{ crumb.get_absolute_url }}">{{ crumb.title }}</a></li>
-            {% endif %}
-        {% endfor %}
-    </ul>
-    <ul class="breadcrumbs">  {# Это нужно как-то автомтизировать, потом придумаю #}
-        {% if request.path == '/wear/'%}
-            <li class = "current">Одежда</li></ul>
-        {% else %}
-            <a href="/wear">Одежда</a></li>
-        {% endif %}
-        {% if '/detail/' not in request.path and '/category/' in request.path %}
-            <li class = "current">{{ cat.title }}</li></ul>
-        {% else %}
-            <a href="/wear/category/{{ cat.id }}">{{ cat.title }}</a></li>
-        {% endif %}
-        {% if '/detail/' in request.path and '/category/' not in request.path %}
-            <li class = "current">{{ wear.title }}</li></ul>
-        {% else %}
-            </li></ul>
-        {% endif %}
+    {% if 'wear' in request.path %}
+    {% include 'breadcrumbs.html' %}
+    {% endif %}
     <div class="large-2 columns">
         <ul class = "off-canvas-list" style="background: #333333; ">
             <li><label>Категории товаров:</label></li>
@@ -41,7 +19,7 @@
             {% endfor %}
         </ul>
     </div>
-{% block wear_block %} {% endblock %}
+{% block content %}{% endblock %}
 </div>
 </body>
 </html>

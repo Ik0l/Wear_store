@@ -1,6 +1,7 @@
 {% extends 'mainview.html' %}
 
-{% block wear_block %}
+{% block title %}{{ cat.title }}{% endblock %}
+{% block content %}
 <div class="large-10 columns">
     {% if cat %}
     <center><span class="radius label" style="font-size: 42px; width: 100%">{{ cat.title }}</span></center>
