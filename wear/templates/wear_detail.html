@@ -5,8 +5,8 @@
     <center><span class="radius label" style="font-size: 42px; width: 100%">{{ wear.title }}</span></center>
     <div style="border: 2px double black; float: left; width: 100%; padding: 5px 5px 5px 5px; margin-top: 20px">
         <div style="float: inherit; max-width: 300px; border: 1px double black; margin-right: 10px; padding: 5px 5px 5px 5px;">
-            <img src="/media/{{ wear.logo }}">
-            <center><a href="/media/{{ wear.logo }}">Увеличить</a></center>
+            <img src="{{ wear.logo.url }}">
+            <center><a href="{{ wear.logo.url }}">Увеличить</a></center>
         </div>
         <div>
         <h2><b>Название: </b>{{ wear.title }}</h2>
@@ -17,8 +17,8 @@
         {% for size in sizes %}
             <p>{{ size.size }} - {{ size.count }}</p>
         {% endfor %}
-        <p><b>Дополнительные комментарии: </b>{{ wear.comment }} {{ add_to_cart }}</p>
-        <a class="button" href="{{ add_to_cart }}">ололо</a>
+        <p><b>Дополнительные комментарии: </b>{{ wear.comment }}</p>
+        <a class="button" href="{{ add_to_cart }}">Добавить в корзину</a>
         </div>
     </div>
 </div>
