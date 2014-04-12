@@ -15,7 +15,7 @@
                 <li class="title">{{ wear.title }}</li>
                 <li class="description" style="max-height: 250px; min-height: 250px"><img src="{{ wear.logo.url }}"></li>
                 <li class="price">{{ wear.price }} руб</li>
-                <li class="cta-button"><a class="button" href="{{ wear.get_absolute_url }}">Просмотр</a><a class="button" href="{{ add_to_cart }}{{ wear.id }}/">В корзину</a></li>
+                <li class="cta-button"><a class="button" href="{{ wear.get_absolute_url }}">Просмотр</a><a class="button" href="{% url 'add_to_cart' wear.id %} ">В корзину</a></li>
             </ul>
         </div>
         {% endfor %}
