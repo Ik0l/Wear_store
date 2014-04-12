@@ -17,7 +17,6 @@ def index(request):  # index пока пустой, скорее всего ту
 def wear_list_cat(request, cat_id):
     context = RequestContext(request)
     if cat_id:
-        context.update({'add_to_cart': reverse('add_to_cart')})
         cat = get_object_or_404(Category, id=cat_id)
         return render_to_response('wear_list.html', {
             'wears': Cloth.objects.filter(category=cat_id),
@@ -29,7 +28,6 @@ def wear_list_cat(request, cat_id):
 
 def wear_detail(request, cloth_id):
     context = RequestContext(request)
-    context.update({'add_to_cart': reverse('add_to_cart_param', args=[cloth_id])})
     sizes = SizeCount.objects.filter(item_id=cloth_id)
     context.update(sizes.aggregate(all_count=Sum('count')))
     cloth = get_object_or_404(Cloth, id=cloth_id)
