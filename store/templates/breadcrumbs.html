@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html>
-<head>
-</head>
 <body>
 {% block breadcrumbs %}
 <ul class="breadcrumbs">
@@ -15,20 +13,19 @@
 </ul>
 <ul class="breadcrumbs">  {# Это нужно как-то автомтизировать, потом придумаю #}
     {% if request.path == '/wear/'%}
-        <li class = "current">Одежда</li></ul>
+        <li class = "current">Одежда</li>
     {% else %}
-        <a href="/wear">Одежда</a></li>
+        <li><a href="/wear/">Одежда</a></li>
     {% endif %}
-    {% if '/detail/' not in request.path and '/category/' in request.path %}
-        <li class = "current">{{ cat.title }}</li></ul>
+    {% if 'category' in request.path %}
+        <li class = "current">{{ cat.title }}</li>
     {% else %}
-        <a href="/wear/category/{{ cat.id }}">{{ cat.title }}</a></li>
+        <li><a href="{{ cat.get_absolute_url }}">{{ cat.title }}</a></li>
     {% endif %}
-    {% if '/detail/' in request.path and '/category/' not in request.path %}
-        <li class = "current">{{ wear.title }}</li></ul>
-    {% else %}
-        </li></ul>
+    {% if 'detail' in request.path %}
+        <li class = "current">{{ wear.title }}</li>
     {% endif %}
+</ul>
 </body>
 {% endblock %}
 </html>
