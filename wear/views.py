@@ -55,7 +55,6 @@ def cart_view(request):
             'wears': Cloth.objects.filter(id__in=request.session["cloth"]),
             'sizes': SizeCount.objects.filter(item_id__in=request.session["cloth"]),
             'items': request.session["cloth"],
-            'length': len(request.session["cloth"]),
         }, context)
     else:
         return render_to_response('cart.html', context)
