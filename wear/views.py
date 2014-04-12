@@ -1,18 +1,35 @@
 # -*- coding:utf-8 -*-
 
 from django.shortcuts import render_to_response, redirect, get_object_or_404
+from django.core.urlresolvers import reverse
 from django.template.context import RequestContext
 from django.db.models import Sum
-from wear.models import Cloth, SizeCount, Size, Category
+from wear.models import Cloth, SizeCount, Category
 
 
-def wear_list(request):
+def index(request):  # index пока пустой, скорее всего тут будут новости, или просто страница приветствия
     context = RequestContext(request)
-    return render_to_response('wear_list.html', {'wears': Cloth.objects.all()}, context)
+    context.update({'message': 'Ололо, ололо, я водитель НЛО.'})
+    return render_to_response('wear_list.html', context)
+
+
+def wear_list_cat(request, cat_id):
+    context = RequestContext(request)
+    if cat_id:
+        context.update({'add_to_cart': reverse('add_to_cart')})
+        cat = get_object_or_404(Category, id=cat_id)
+        return render_to_response('wear_list.html', {
+            'wears': Cloth.objects.filter(category=cat_id),
+            'cat': cat
+        }, context)
+    else:
+        return render_to_response('wear_list.html', {'wears': Cloth.objects.all()}, context)
+
 
 
 def wear_detail(request, cloth_id):
     context = RequestContext(request)
+    context.update({'add_to_cart': reverse('add_to_cart_param', args=[cloth_id])})
     sizes = SizeCount.objects.filter(item_id=cloth_id)
     context.update(sizes.aggregate(all_count=Sum('count')))
     cloth = get_object_or_404(Cloth, id=cloth_id)
@@ -20,15 +37,6 @@ def wear_detail(request, cloth_id):
         'wear': cloth,
         'cat': cloth.category,
         'sizes': sizes,
-    }, context)
-
-
-def wear_list_cat(request, cat_id):
-    context = RequestContext(request)
-    cat = get_object_or_404(Category, id=cat_id)
-    return render_to_response('wear_list.html', {
-        'wears': Cloth.objects.filter(category=cat_id),
-        'cat': cat
     }, context)
 
 

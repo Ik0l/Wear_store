@@ -12,12 +12,13 @@
         <h2><b>Название: </b>{{ wear.title }}</h2>
         <h5><b>Описание: </b>{{ wear.description }}</h5>
         <h5><b>Цена: </b>{{ wear.price }} руб.</h5>
-        <h5><b>Количество на складе: </b>{{all_count}}</h5>
+        <h5><b>Количество на складе: </b>{{ all_count }}</h5>
         <p><b>Размеры: </b></p>
         {% for size in sizes %}
             <p>{{ size.size }} - {{ size.count }}</p>
         {% endfor %}
-        <p><b>Дополнительные комментарии: </b>{{ wear.comment }} </p>
+        <p><b>Дополнительные комментарии: </b>{{ wear.comment }} {{ add_to_cart }}</p>
+        <a class="button" href="{{ add_to_cart }}">ололо</a>
         </div>
     </div>
 </div>
