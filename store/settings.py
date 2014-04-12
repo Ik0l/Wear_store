@@ -23,10 +23,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 TEMPLATE_DIRS = {
     path('store', 'templates'),
-    # нет необходимости прописывать пути к папкам с шаблонами не самого приложения
-    # в во всех модулях по умолчанию ожидается папка templates в корневой папке модуля
-    # сейчас у тебя твоё приложение это store а wear это лишь внешний модуль
-    # path('wear', 'templates'),
 }
 
 ALLOWED_HOSTS = []

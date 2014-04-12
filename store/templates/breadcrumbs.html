@@ -13,17 +13,17 @@
 </ul>
 <ul class="breadcrumbs">  {# Это нужно как-то автомтизировать, потом придумаю #}
     {% if request.path == '/wear/'%}
-        <li class = "current">Одежда</li>
+        <li class="current">Одежда</li>
     {% else %}
         <li><a href="/wear/">Одежда</a></li>
     {% endif %}
     {% if 'category' in request.path %}
-        <li class = "current">{{ cat.title }}</li>
+        <li class="current">{{ cat.title }}</li>
     {% else %}
         <li><a href="{{ cat.get_absolute_url }}">{{ cat.title }}</a></li>
     {% endif %}
     {% if 'detail' in request.path %}
-        <li class = "current">{{ wear.title }}</li>
+        <li class="current">{{ wear.title }}</li>
     {% endif %}
 </ul>
 </body>
