@@ -1,31 +1,37 @@
+{# стоп стоп стоп, зачем ты полностью описываешь html страницу когда это у тебя просто include #}
+{% comment %}
 <!DOCTYPE html>
 <html>
 <body>
 {% block breadcrumbs %}
-<ul class="breadcrumbs">
-    {% for crumb in breadcrumbs %}
-        {% if request.path == crumb.get_absolute_url %}
-            <li class="current">{{ crumb.title }}</li>
-        {% else %}
-            <li><a href="{{ crumb.get_absolute_url }}">{{ crumb.title }}</a></li>
-        {% endif %}
-    {% endfor %}
-</ul>
+{% endcomment %}
+
+{# и зачем у тебя два одинаковы блока? #}
+<ul class="breadcrumbs">{% for crumb in breadcrumbs %}
+	{% if request.path == crumb.get_absolute_url %}
+		<li class="current">{{ crumb.title }}</li>
+	{% else %}
+		<li><a href="{{ crumb.get_absolute_url }}">{{ crumb.title }}</a></li>
+	{% endif %}
+{% endfor %}</ul>
 <ul class="breadcrumbs">  {# Это нужно как-то автомтизировать, потом придумаю #}
-    {% if request.path == '/wear/'%}
-        <li class="current">Одежда</li>
-    {% else %}
-        <li><a href="/wear/">Одежда</a></li>
-    {% endif %}
-    {% if 'category' in request.path %}
-        <li class="current">{{ cat.title }}</li>
-    {% else %}
-        <li><a href="{{ cat.get_absolute_url }}">{{ cat.title }}</a></li>
-    {% endif %}
-    {% if 'detail' in request.path %}
-        <li class="current">{{ wear.title }}</li>
-    {% endif %}
+	{% if request.path == '/wear/'%}
+		<li class="current">Одежда</li>
+	{% else %}
+		<li><a href="/wear/">Одежда</a></li>
+	{% endif %}
+	{% if 'category' in request.path %}
+		<li class="current">{{ cat.title }}</li>
+	{% else %}
+		<li><a href="{{ cat.get_absolute_url }}">{{ cat.title }}</a></li>
+	{% endif %}
+	{% if 'detail' in request.path %}
+		<li class="current">{{ wear.title }}</li>
+	{% endif %}
 </ul>
+
+{% comment %}
 </body>
 {% endblock %}
 </html>
+{% endcomment %}

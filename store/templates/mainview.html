@@ -1,25 +1,23 @@
-{% load staticfiles %}
-<!DOCTYPE html>
+{% load staticfiles %}<!DOCTYPE html>
+{# я же уже сказал доктайп должен быть первой строкой! а у тебя первая строка пустая #}
 <html>
-<head>
-    <title>Store. {% block title %}{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="{% static "css/foundation.css" %}">
-</head>
-<body>
-<center><a href="/"><h1>Wear_Store_logo</h1></a></center>
-<div class="row" >
-    {% if 'wear' in request.path %}
-    {% include 'breadcrumbs.html' %}
-    {% endif %}
-    <div class="large-2 columns">
-        <ul class = "off-canvas-list" style="background: #333333; ">
-            <li><label>Категории товаров:</label></li>
-            {% for category in category_list %}
-            <li><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
-            {% endfor %}
-        </ul>
-    </div>
-{% block content %}{% endblock %}
-</div>
-</body>
+	<head>
+		<title>Store. {% block title %}{% endblock %}</title>
+		<link rel="stylesheet" type="text/css" href="{% static "css/foundation.css" %}">
+	</head>
+	<body>
+		<center><a href="/"><h1>Wear_Store_logo</h1></a></center>
+		<div class="row" >
+			{% if 'wear' in request.path %}{% include 'breadcrumbs.html' %}{% endif %}
+			<div class="large-2 columns">
+				<ul class = "off-canvas-list" style="background: #333333; ">
+					<li><label>Категории товаров:</label></li>
+					{% for category in category_list %}
+					<li><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+		{% block content %}{% endblock %}
+		</div>
+	</body>
 </html>

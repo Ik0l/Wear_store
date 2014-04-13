@@ -1,5 +1,6 @@
 {% extends 'mainview.html' %}
 
+
 {% block content %}
 <script type="text/javascript">
 	function item_plus(){
@@ -10,6 +11,7 @@
 </script>
 <div class="large-10 columns">
 	<center><span class="radius label" style="font-size: 42px; width: 100%">Корзина</span></center>
+{# тут совершенно непойму структуру... двойной цикл какой-то, по мне так тут вполне можно обойтись одним циклом по товарам в корзине.... возможно тут есть какая причина я не понял #}
 	{% if wears %}
 	<p>{{ items|length }} предмета(ов) в корзине:</p>
 	<form name="asd" method="post">
