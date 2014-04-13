@@ -44,6 +44,10 @@ def cart_add(request, cloth_id):
         return redirect('/cart/')
     else:
         request.session.set_expiry(60)  # Для тестов. Не забыть исправить, а лучше использовать что-нибудь другое
+        # сделай в зависимости от settings.DEBUG или свою переменную сделай к примеру setttings.COOKIE_DEBUG
+        # и пускай у тебя будет что то подобное...
+        # if settings.COOKIE_DEBUG:
+        #     request.session.set_expiry(60)
         request.session["cloth"] = [Cloth.objects.get(id=cloth_id).id]
         return redirect('/')
 

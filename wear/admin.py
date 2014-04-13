@@ -10,11 +10,9 @@ class SizesInLine(admin.TabularInline):
     model = SizeCount
     extra = 1
 
-
 class GaleryInLine(admin.TabularInline):
     model = Gallery
     extra = 1
-
 
 class ClothAdmin(admin.ModelAdmin):
     inlines = [SizesInLine, GaleryInLine]
