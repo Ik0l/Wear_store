@@ -36,7 +36,10 @@ class Cloth(models.Model):
     title = models.CharField(u'Название', max_length=200)
     description = models.TextField(u'Описание', blank=True)
     price = models.IntegerField(u'Цена', )
-    logo = models.ImageField(u'Основное изображение', upload_to="wear/galery/logos", blank=True)
+    # http://djbook.ru/rel1.6/ref/models/fields.html#null
+    # стоит указывать это значение везде кроме текстовых полей если поле необязательно, раньше это предлагали в документации, сейчас этого нету... или я просто потерял место....
+    # это для БД, что бы поле не было пустым, тем более что как указано в документации, БД Оракл всё равно будет так использовать
+    logo = models.ImageField(u'Основное изображение', upload_to="wear/galery/logos", blank=True, null=True)
     comment = models.TextField(u'Дополнительные комментарии', blank=True)
     category = models.ForeignKey(Category)
     rating_1 = models.IntegerField(u'Оценка 1', default=0)
@@ -75,7 +78,7 @@ class SizeCount(models.Model):
 
 class Gallery(models.Model):
     item = models.ForeignKey(Cloth)
-    image = models.ImageField(u'Изображение', upload_to="wear/galery", blank=True)
+    image = models.ImageField(u'Изображение', upload_to="wear/galery", blank=True, null=True)
 
     class Meta():
         verbose_name = u'Изображение'
