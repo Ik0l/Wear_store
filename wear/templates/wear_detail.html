@@ -12,17 +12,29 @@
 			<center><a href="{{ wear.logo.url }}">Увеличить</a></center>
 		</div>
 		<div>
-		<h2><b>Название: </b>{{ wear.title }}</h2>
-		<h5><b>Описание: </b>{{ wear.description }}</h5>
-		<h5><b>Цена: </b>{{ wear.price }} руб.</h5>
-		<h5><b>Количество на складе: </b>{{ all_count }}</h5>
-		{% if sizes %}
-        <p><b>Размеры: </b></p>
-		{% for size in sizes %}<p>{{ size.size }} - {{ size.count }}</p>{% endfor %}
-		{% endif %}
-        {% if wear.comment %}<p><b>Дополнительные комментарии: </b>{{ wear.comment }}</p>{% endif %}
-		<a class="button" href="{% url 'add_to_cart' wear.id %}">Добавить в корзину</a>
+		    <h2><b>Название: </b>{{ wear.title }}</h2>
+		    <h5><b>Описание: </b>{{ wear.description }}</h5>
+		    <h5><b>Цена: </b>{{ wear.price }} руб.</h5>
+		    <h5><b>Количество на складе: </b>{{ all_count }}</h5>
+		    {% if sizes %}
+            <p><b>Размеры: </b></p>
+		    {% for size in sizes %}<p>{{ size.size }} - {{ size.count }}</p>{% endfor %}
+		    {% endif %}
+            {% if wear.comment %}<p><b>Дополнительные комментарии: </b>{{ wear.comment }}</p>{% endif %}
+		    <a class="button" href="{% url 'add_to_cart' wear.id %}">Добавить в корзину</a>
 		</div>
-	</div>
+        <h5><b>Комментарии к предмету:</b></h5>
+        <div class="large-offset-1 large-10 columns">
+            {% for comment in comments %}
+                <p>{{ forloop.counter }}. {{ comment.text }}</p>
+            {% endfor %}
+        </div>
+        <h5><b>Добавить комментарий: </b></h5>
+        <form action="/wear/add_comment/{{ wear.id }}/" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" class="button" value="Добавить комментарий">
+        </form>
+    </div>
 </div>
 {% endblock %}

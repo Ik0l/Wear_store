@@ -8,6 +8,7 @@ SECRET_KEY = '+dy&m(egj0s96l7(6-#4mz9hj)l#7reya(d9*f3z*wgem)d3k*'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+COOKIE_DEBUG = DEBUG
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",

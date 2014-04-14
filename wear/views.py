@@ -4,9 +4,11 @@ from django.core.urlresolvers import reverse
 from django.db.models import Sum
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template.context import RequestContext
+from django.core.context_processors import csrf
 
-from wear.models import Cloth, SizeCount, Category
-
+from store import settings
+from wear.models import Cloth, SizeCount, Category, Comments
+from forms import CommentForm
 
 def index(request):  # index пока пустой, скорее всего тут будут новости, или просто страница приветствия
     context = RequestContext(request)
@@ -28,13 +30,17 @@ def wear_list_cat(request, cat_id):
 
 def wear_detail(request, cloth_id):
     context = RequestContext(request)
+    comment_form = CommentForm
     sizes = SizeCount.objects.filter(item_id=cloth_id)
     context.update(sizes.aggregate(all_count=Sum('count')))
+    context.update(csrf(request))
     cloth = get_object_or_404(Cloth, id=cloth_id)
     return render_to_response('wear_detail.html', {
         'wear': cloth,
         'cat': cloth.category,
         'sizes': sizes,
+        'comments': Comments.objects.filter(item_id = cloth_id),
+        'form': comment_form,
     }, context)
 
 
@@ -43,12 +49,10 @@ def cart_add(request, cloth_id):
         request.session["cloth"] += [Cloth.objects.get(id=cloth_id).id]
         return redirect('/cart/')
     else:
-        request.session.set_expiry(60)  # Для тестов. Не забыть исправить, а лучше использовать что-нибудь другое
-        # сделай в зависимости от settings.DEBUG или свою переменную сделай к примеру setttings.COOKIE_DEBUG
-        # и пускай у тебя будет что то подобное...
-        # if settings.COOKIE_DEBUG:
-        #     request.session.set_expiry(60)
-        request.session["cloth"] = [Cloth.objects.get(id=cloth_id).id]
+        # Для тестов. Не забыть исправить, а лучше использовать что-нибудь другое
+        if settings.COOKIE_DEBUG:
+            request.session.set_expiry(60)
+            request.session["cloth"] = [Cloth.objects.get(id=cloth_id).id]
         return redirect('/')
 
 
@@ -62,3 +66,13 @@ def cart_view(request):
         }, context)
     else:
         return render_to_response('cart.html', context)
+
+
+def add_comment(request, cloth_id):
+    if request.POST:
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.item = Cloth.objects.get(id=cloth_id)
+            form.save()
+    return redirect('/wear/detail/%s/' % cloth_id)

@@ -1,0 +1,28 @@
+{% extends 'mainview.html' %}
+
+
+{% block title %} {{ wear.title }} {% endblock %}
+
+{% block content %}
+<div class="large-10 columns">
+	<center><span class="radius label" style="font-size: 42px; width: 100%">{{ wear.title }}</span></center>
+	<div style="border: 2px double black; float: left; width: 100%; padding: 5px 5px 5px 5px; margin-top: 20px">
+		<div style="float: inherit; max-width: 300px; border: 1px double black; margin-right: 10px; padding: 5px 5px 5px 5px;">
+			<img src="{{ wear.logo.url }}">
+			<center><a href="{{ wear.logo.url }}">Увеличить</a></center>
+		</div>
+		<div>
+		<h2><b>Название: </b>{{ wear.title }}</h2>
+		<h5><b>Описание: </b>{{ wear.description }}</h5>
+		<h5><b>Цена: </b>{{ wear.price }} руб.</h5>
+		<h5><b>Количество на складе: </b>{{ all_count }}</h5>
+		{% if sizes %}
+        <p><b>Размеры: </b></p>
+		{% for size in sizes %}<p>{{ size.size }} - {{ size.count }}</p>{% endfor %}
+		{% endif %}
+        {% if wear.comment %}<p><b>Дополнительные комментарии: </b>{{ wear.comment }}</p>{% endif %}
+		<a class="button" href="{% url 'add_to_cart' wear.id %}">Добавить в корзину</a>
+		</div>
+	</div>
+</div>
+{% endblock %}
