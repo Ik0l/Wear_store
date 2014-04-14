@@ -16,10 +16,11 @@
 		<h5><b>Описание: </b>{{ wear.description }}</h5>
 		<h5><b>Цена: </b>{{ wear.price }} руб.</h5>
 		<h5><b>Количество на складе: </b>{{ all_count }}</h5>
-		<p><b>Размеры: </b></p>
+		{% if sizes %}
+        <p><b>Размеры: </b></p>
 		{% for size in sizes %}<p>{{ size.size }} - {{ size.count }}</p>{% endfor %}
-{# Возможно некоторые вещи могут отсутствовать, поэтому иногда можно проверять на наличие #}
-		{% if wear.comment %}<p><b>Дополнительные комментарии: </b>{{ wear.comment }}</p>{% endif %}
+		{% endif %}
+        {% if wear.comment %}<p><b>Дополнительные комментарии: </b>{{ wear.comment }}</p>{% endif %}
 		<a class="button" href="{% url 'add_to_cart' wear.id %}">Добавить в корзину</a>
 		</div>
 	</div>

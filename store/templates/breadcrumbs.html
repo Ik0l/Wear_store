@@ -1,12 +1,4 @@
-{# стоп стоп стоп, зачем ты полностью описываешь html страницу когда это у тебя просто include #}
-{% comment %}
-<!DOCTYPE html>
-<html>
-<body>
-{% block breadcrumbs %}
-{% endcomment %}
-
-{# и зачем у тебя два одинаковы блока? #}
+{% comment %} {# Возможно что-то из этого сделаю #}
 <ul class="breadcrumbs">{% for crumb in breadcrumbs %}
 	{% if request.path == crumb.get_absolute_url %}
 		<li class="current">{{ crumb.title }}</li>
@@ -14,6 +6,7 @@
 		<li><a href="{{ crumb.get_absolute_url }}">{{ crumb.title }}</a></li>
 	{% endif %}
 {% endfor %}</ul>
+{% endcomment %}
 <ul class="breadcrumbs">  {# Это нужно как-то автомтизировать, потом придумаю #}
 	{% if request.path == '/wear/'%}
 		<li class="current">Одежда</li>
@@ -29,9 +22,3 @@
 		<li class="current">{{ wear.title }}</li>
 	{% endif %}
 </ul>
-
-{% comment %}
-</body>
-{% endblock %}
-</html>
-{% endcomment %}

@@ -5,22 +5,12 @@
 
 {% block content %}
 <div class="large-10 columns">
-{% comment %}
-Зачем тебе дублировать полностью всю строку когда у тебя меняется только название
-	{% if cat %}
-	<center><span class="radius label" style="font-size: 42px; width: 100%">{{ cat.title }}</span></center>
-	{% else %}
-	<center><span class="radius label" style="font-size: 42px; width: 100%">Одежда</span></center>
-	{% endif %}
-сделай проще:
-{% endcomment %}
 	<center><span class="radius label" style="font-size: 42px; width: 100%">{% if cat %}{{ cat.title }}{% else %}Одежда{% endif %}</span></center>
 	<div style="border: 2px double black; float: left; width: 100%; padding: 5px 5px 5px 5px; margin-top: 20px">
 		{{ message }}
 		{% for wear in wears %}<div style="float: inherit; margin: 5px 5px 5px 5px">
 			<ul class="pricing-table" style="width: 250px">
 				<li class="title">{{ wear.title }}</li>
-{# Для браузера клиента очень неплохо если ты будешь отдавать в параметрах тега имг размеры картинки, так браузеру нет необходимости высчитывать их самому, однако это нагрузка на сервер несколько лишняя, если делать стандартными средствами джанго, то каждый раз эти данный получаются из файла, так что стоит решать в зависимости от ситуации, к примеру ты можешь сохранять эти данные в БД плюс сделать кеширование. это самые очевидные способы #}
 				<li class="description" style="max-height: 250px; min-height: 250px"><img src="{{ wear.logo.url }}" height="{{ wear.logo.height }}" width="{{ wear.logo.width }}" ></li>
 				<li class="price">{{ wear.price }} руб</li>
 				<li class="cta-button">
