@@ -3,8 +3,10 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from store.models import PublishModel
 
-class Category(models.Model):
+
+class Category(PublishModel):
     title = models.CharField(u'Название', max_length=30)
 
     @models.permalink
@@ -32,7 +34,7 @@ class Size(models.Model):
         return u'%s(%s)' % (self.title, self.category.title)
 
 
-class Cloth(models.Model):
+class Cloth(PublishModel):
     title = models.CharField(u'Название', max_length=200)
     description = models.TextField(u'Описание', blank=True)
     price = models.IntegerField(u'Цена', )
@@ -76,7 +78,7 @@ class SizeCount(models.Model):
         return u'%s' % self.size
 
 
-class Gallery(models.Model):
+class Gallery(PublishModel):
     item = models.ForeignKey(Cloth)
     image = models.ImageField(u'Изображение', upload_to="wear/galery", blank=True, null=True)
 
@@ -85,13 +87,14 @@ class Gallery(models.Model):
         verbose_name_plural = u'Изображения'
 
 
-class Comments(models.Model):
+class Comments(PublishModel):
     item = models.ForeignKey(Cloth)
     text = models.TextField(u'Текст комментария', )
 
     class Meta():
         verbose_name = u'Комментарий'
         verbose_name_plural = u'Комментарии'
+
 
 class Cart(models.Model):
     user = models.ForeignKey(User)
@@ -106,6 +109,7 @@ class Cart(models.Model):
     class Meta():
         verbose_name = u'Заказ'
         verbose_name_plural = u'Заказы'
+
 
 class Contacts(models.Model):
     user = models.ForeignKey(User)

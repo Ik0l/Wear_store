@@ -85,3 +85,8 @@ MEDIA_ROOT = path('www', 'media')
 MEDIA_URL = '/media/'
 LOCAL_MEDIA_ROOT = MEDIA_ROOT
 LOCAL_MEDIA_URL = MEDIA_URL
+
+FILE_UPLOAD_HANDLERS = (
+    'wear.upload_handlers.MemoryFileUploadHandler',
+    'wear.upload_handlers.TemporaryFileUploadHandler'
+)

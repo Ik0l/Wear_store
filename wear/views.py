@@ -19,13 +19,13 @@ def index(request):  # index пока пустой, скорее всего ту
 def wear_list_cat(request, cat_id):
     context = RequestContext(request)
     if cat_id:
-        cat = get_object_or_404(Category, id=cat_id)
+        cat = get_object_or_404(Category, id=cat_id, is_published=True)
         return render_to_response('wear_list.html', {
-            'wears': Cloth.objects.filter(category=cat_id),
+            'wears': Cloth.objects.published(category=cat_id),
             'cat': cat
         }, context)
     else:
-        return render_to_response('wear_list.html', {'wears': Cloth.objects.all()}, context)
+        return render_to_response('wear_list.html', {'wears': Cloth.objects.published()}, context)
 
 
 def wear_detail(request, cloth_id):
@@ -34,10 +34,10 @@ def wear_detail(request, cloth_id):
     sizes = SizeCount.objects.filter(item_id=cloth_id)
     context.update(sizes.aggregate(all_count=Sum('count')))
     context.update(csrf(request))
-    cloth = get_object_or_404(Cloth, id=cloth_id)
+    cloth = get_object_or_404(Cloth, id=cloth_id, is_published=True)
     return render_to_response('wear_detail.html', {
         'wear': cloth,
-        'cat': cloth.category,
+        # 'cat': cloth.category,
         'sizes': sizes,
         'comments': Comments.objects.filter(item_id = cloth_id),
         'form': comment_form,
@@ -46,13 +46,13 @@ def wear_detail(request, cloth_id):
 
 def cart_add(request, cloth_id):
     if "cloth" in request.session:
-        request.session["cloth"] += [Cloth.objects.get(id=cloth_id).id]
+        request.session["cloth"] += [Cloth.objects.get(id=cloth_id, is_published=True).id]
         return redirect('/cart/')
     else:
         # Для тестов. Не забыть исправить, а лучше использовать что-нибудь другое
         if settings.COOKIE_DEBUG:
             request.session.set_expiry(60)
-            request.session["cloth"] = [Cloth.objects.get(id=cloth_id).id]
+            request.session["cloth"] = [Cloth.objects.get(id=cloth_id, is_published=True).id]
         return redirect('/')
 
 
@@ -60,7 +60,7 @@ def cart_view(request):
     context = RequestContext(request)
     if "cloth" in request.session:
         return render_to_response('cart.html', {
-            'wears': Cloth.objects.filter(id__in=request.session["cloth"]),
+            'wears': Cloth.objects.published(id__in=request.session["cloth"]),
             'sizes': SizeCount.objects.filter(item_id__in=request.session["cloth"]),
             'items': request.session["cloth"],
         }, context)
@@ -73,6 +73,6 @@ def add_comment(request, cloth_id):
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.item = Cloth.objects.get(id=cloth_id)
+            comment.item = Cloth.objects.get(id=cloth_id, is_published=True)
             form.save()
     return redirect('/wear/detail/%s/' % cloth_id)
