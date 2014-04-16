@@ -1,3 +1,12 @@
+{% comment %} {# Возможно что-то из этого сделаю #}
+<ul class="breadcrumbs">{% for crumb in breadcrumbs %}
+	{% if request.path == crumb.get_absolute_url %}
+		<li class="current">{{ crumb.title }}</li>
+	{% else %}
+		<li><a href="{{ crumb.get_absolute_url }}">{{ crumb.title }}</a></li>
+	{% endif %}
+{% endfor %}</ul>
+{% endcomment %}
 <ul class="breadcrumbs">  {# Это нужно как-то автомтизировать, потом придумаю #}
 	{% if request.path == '/wear/'%}
 		<li class="current">Одежда</li>
