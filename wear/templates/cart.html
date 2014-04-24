@@ -2,56 +2,55 @@
 
 
 {% block content %}
-<script type="text/javascript">
-	function item_plus(){
-		var b = this.getAttribute("data-id");
-		var x = document.getElementById(b);
-		x.value ++;
-	}
-</script>
 <div class="large-10 columns">
 	<center><span class="radius label" style="font-size: 42px; width: 100%">Корзина</span></center>
 	{% if wears %}
-	<p>{{ items|length }} предмета(ов) в корзине:</p>
-	<form action="/purchase/" method="post">
-        {% csrf_token %}
-	        <div style="border: 2px double black; float: left; width: 100%; padding: 5px 5px 5px 5px">
-		        <table>
-			        <tr>
-				        <th>Название</th><th>Описание</th><th>Кол-во</th><th>Цена</th><th>Размер</th>
-			        </tr>
-                {% for item in items %}
-                {% for wear in wears %}
-                {% if wear.id == item %}
+        <p>{{ items|length }} предмета(ов) в корзине:</p>
+        <form action="/purchase/" method="post">
+            {% csrf_token %}
+            <div style="border: 2px double black; float: left; width: 100%; padding: 5px 5px 5px 5px">
+                <table>
                     <tr>
-                        <td>
-                            <a href="{{ wear.get_absolute_url }}">{{ wear.title }}</a>
-                        </td>
-                        <td>{{ wear.description }}</td>
-                        <td>
-                            <input id="item_field_{{ forloop.counter }}" type="text" value="1"/><input type="button" id="Button_{{ forloop.counter }}" data-id="item_field_{{ forloop.counter }}" onclick="item_plus(this.id);return false;" value="+"/></td>
-                        <td>{{ wear.price }}
-                        </td>
-                        <td>
-                            <select name="select" style="min-width: 100px">
-                                <option selected="selected">Размер</option>
-                                {% for size in sizes %}
-                                {% if size.cloth_id == wear.id %}
-                                <option>{{ size.size }} - {{ size.count }}</option>
-                                {% endif %}
-                                {% endfor %}
-                            </select>
-                        </td>
+                        <th>Название</th><th>Описание</th><th>Кол-во</th><th>Цена</th><th>Размер</th>
                     </tr>
-                {% endif %}
-                {% endfor %}
-                {% endfor %}
+                    {% for item in items %}
+                        {% for wear in wears %}
+                            {% if wear.id == item.item %}
+                            <tr>
+                                <td>
+                                    <a href="{{ wear.get_absolute_url }}">{{ wear.title }}</a>
+                                </td>
+                                <td>
+                                    {{ wear.description }}
+                                </td>
+                                <td>
+                                    <input type="button" id="Button_{{ forloop.counter }}" data-id="item_field_{{ forloop.counter }}" onclick="item_minus(this.id);return false;" value="-"/>
+                                    <input id="item_field_{{ forloop.counter }}" type="text" value="{{ item.count }}"/>
+                                    <input type="button" id="Button_{{ forloop.counter }}" data-id="item_field_{{ forloop.counter }}" onclick="item_plus(this.id);return false;" value="+"/>
+                                </td>
+                                <td>
+                                    {{ wear.price }}
+                                </td>
+                                <td>
+                                    <select name="select" style="min-width: 100px">
+                                        <option selected="selected">Размер</option>
+                                        {% for size in sizes %}
+                                        {% if size.cloth_id == wear.id %}
+                                        <option>{{ size.size }} - {{ size.count }}</option>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
                 </table>
                 <div style="float: left; width: 100%"><input class="button round" type="submit" value="Оформить заказ" style="float: top"></div>
             </div>
-	</form>
+        </form>
 	{% else %}
-	No items
+	    No items
 	{% endif %}
 </div>
 {% endblock %}

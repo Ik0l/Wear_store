@@ -1,4 +1,5 @@
-{% extends 'mainview.html' %}{% load staticfiles %}
+{% extends 'mainview.html' %}
+{% load staticfiles %}
 
 
 {% block title %}{{ cat.title }}{% endblock %}
@@ -13,9 +14,9 @@
 				<li class="title">{{ wear.title }}</li>
 				<li class="description" style="max-height: 250px; min-height: 250px">
                     {% if wear.logo %}
-                    <img src="{{ wear.logo.url }}" height="{{ wear.logo.height }}" width="{{ wear.logo.width }}">
+                        <img src="{{ wear.logo.url }}" height="{{ wear.logo.height }}" width="{{ wear.logo.width }}">
                     {% else %}
-                    <img src="{% static "img/default.jpg" %}" height="800" width="800">
+                        <img src="{% static "img/default.jpg" %}" height="800" width="800">
                     {% endif %}
                 </li>
 				<li class="price">{{ wear.price }} руб</li>
@@ -24,7 +25,8 @@
 					<a class="button" href="{% url 'add_to_cart' wear.id %}">В корзину</a>
 				</li>
 			</ul>
-		</div>{% endfor %}
+		</div>
+        {% endfor %}
 	</div>
 </div>
 {% endblock %}

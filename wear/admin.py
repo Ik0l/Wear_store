@@ -1,9 +1,8 @@
 # -*- coding:utf-8 -*-
 
-from django import forms
 from django.contrib import admin
 
-from wear.models import Category, Cloth, Size, SizeCount, Gallery
+from wear.models import Category, Cloth, Size, SizeCount, Gallery, Cart
 
 
 class SizesInLine(admin.TabularInline):
@@ -22,3 +21,4 @@ class ClothAdmin(admin.ModelAdmin):
 admin.site.register(Category)
 admin.site.register(Size)
 admin.site.register(Cloth, ClothAdmin)
+admin.site.register(Cart)

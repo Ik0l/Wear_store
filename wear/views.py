@@ -44,33 +44,38 @@ def wear_detail(request, cloth_id):
 
 def cart_add(request, cloth_id):
     if "cloth" in request.session:
-        request.session["cloth"] += [Cloth.objects.get(id=cloth_id, is_published=True).id]
-        request.session["cloth_2"].update({
-            Cloth.objects.get(id=cloth_id, is_published=True).id: {'size': 'XL',
-                                                                   'count': 1
+        request.session["cloth"] += [
+            {
+                'item': Cloth.objects.get(id=cloth_id, is_published=True).id,
+                'size': 'size_def',
+                'count': 1
             }
-        })
+        ]
         return redirect('/cart/')
     else:
         # Для тестов. Не забыть исправить, а лучше использовать что-нибудь другое
         if settings.COOKIE_DEBUG:
             request.session.set_expiry(60)
-            request.session["cloth"] = [Cloth.objects.get(id=cloth_id, is_published=True).id]
-            request.session["cloth_2"] = {
-                Cloth.objects.get(id=cloth_id, is_published=True).id: {'size': 'XL',
-                                                                       'count': 1
+            request.session["cloth"] = [
+                {
+                    'item': Cloth.objects.get(id=cloth_id, is_published=True).id,
+                    'size': 'size_def',
+                    'count': 1
                 }
-            }
+            ]
         return redirect('/cart/')
 
 
 def cart_view(request):
     context = RequestContext(request)
     if "cloth" in request.session:
+        items_list = []
+        for item in request.session["cloth"]:
+            items_list += [item['item']]
         return render_to_response('cart.html', {
-            'wears': Cloth.objects.published(id__in=request.session["cloth"]),
-            'sizes': SizeCount.objects.filter(item_id__in=request.session["cloth"]),
-            'items': request.session["cloth"],
+            'wears': Cloth.objects.published(id__in=items_list),
+            'sizes': SizeCount.objects.filter(item_id__in=items_list),
+            'items': request.session["cloth"]
         }, context)
     else:
         return render_to_response('cart.html', context)
@@ -88,12 +93,9 @@ def add_comment(request, cloth_id):
 
 def cart_purchase(request):   # Testing
     if request.POST:
-        ses = request.session["cloth_2"]
         print('session here:')
-        for x in ses:
-            print(x)
-            print "Size of %s: %s" % (x, ses[x]['size'])
-            print "Count: %s" % ses[x]['count']
-        print('ok')
-        print(ses)
+        for x in request.session["cloth"]:
+            print x
+            print 'item %s' %x['item']
+        print request.session["cloth"]
     return redirect('/')
