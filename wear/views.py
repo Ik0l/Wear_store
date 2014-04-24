@@ -1,6 +1,5 @@
 # -*- coding:utf-8 -*-
 
-from django.core.urlresolvers import reverse
 from django.db.models import Sum
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template.context import RequestContext
@@ -46,13 +45,23 @@ def wear_detail(request, cloth_id):
 def cart_add(request, cloth_id):
     if "cloth" in request.session:
         request.session["cloth"] += [Cloth.objects.get(id=cloth_id, is_published=True).id]
+        request.session["cloth_2"].update({
+            Cloth.objects.get(id=cloth_id, is_published=True).id: {'size': 'XL',
+                                                                   'count': 1
+            }
+        })
         return redirect('/cart/')
     else:
         # Для тестов. Не забыть исправить, а лучше использовать что-нибудь другое
         if settings.COOKIE_DEBUG:
             request.session.set_expiry(60)
             request.session["cloth"] = [Cloth.objects.get(id=cloth_id, is_published=True).id]
-        return redirect('/')
+            request.session["cloth_2"] = {
+                Cloth.objects.get(id=cloth_id, is_published=True).id: {'size': 'XL',
+                                                                       'count': 1
+                }
+            }
+        return redirect('/cart/')
 
 
 def cart_view(request):
@@ -75,3 +84,16 @@ def add_comment(request, cloth_id):
             comment.item = Cloth.objects.get(id=cloth_id, is_published=True)
             form.save()
     return redirect('/wear/detail/%s/' % cloth_id)
+
+
+def cart_purchase(request):   # Testing
+    if request.POST:
+        ses = request.session["cloth_2"]
+        print('session here:')
+        for x in ses:
+            print(x)
+            print "Size of %s: %s" % (x, ses[x]['size'])
+            print "Count: %s" % ses[x]['count']
+        print('ok')
+        print(ses)
+    return redirect('/')

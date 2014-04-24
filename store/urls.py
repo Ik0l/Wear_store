@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     url(r'^$', 'wear.views.index'),
     url(r'^wear/', include('wear.urls')),
     url(r'^cart/$', 'wear.views.cart_view'),
+    url(r'^purchase/$', 'wear.views.cart_purchase'),
 
     url(r'^admin/', include(admin.site.urls)),
 )

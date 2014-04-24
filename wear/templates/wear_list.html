@@ -1,4 +1,4 @@
-{% extends 'mainview.html' %}
+{% extends 'mainview.html' %}{% load staticfiles %}
 
 
 {% block title %}{{ cat.title }}{% endblock %}
@@ -11,7 +11,13 @@
 		{% for wear in wears %}<div style="float: inherit; margin: 5px 5px 5px 5px">
 			<ul class="pricing-table" style="width: 250px">
 				<li class="title">{{ wear.title }}</li>
-				<li class="description" style="max-height: 250px; min-height: 250px"><img src="{{ wear.logo.url }}" height="{{ wear.logo.height }}" width="{{ wear.logo.width }}" ></li>
+				<li class="description" style="max-height: 250px; min-height: 250px">
+                    {% if wear.logo %}
+                    <img src="{{ wear.logo.url }}" height="{{ wear.logo.height }}" width="{{ wear.logo.width }}">
+                    {% else %}
+                    <img src="{% static "img/default.jpg" %}" height="800" width="800">
+                    {% endif %}
+                </li>
 				<li class="price">{{ wear.price }} руб</li>
 				<li class="cta-button">
 					<a class="button" href="{{ wear.get_absolute_url }}">Просмотр</a>
