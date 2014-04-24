@@ -37,7 +37,6 @@ def wear_detail(request, cloth_id):
     cloth = get_object_or_404(Cloth, id=cloth_id, is_published=True)
     return render_to_response('wear_detail.html', {
         'wear': cloth,
-        # 'cat': cloth.category,
         'sizes': sizes,
         'comments': Comments.objects.filter(item_id = cloth_id),
         'form': comment_form,
